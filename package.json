@@ -28,6 +28,7 @@
     "multer": "^1.4.2",
     "multer-s3": "^2.9.0",
     "node-fetch": "^2.6.1",
+    "node-sass": "^8.0.0",
     "postcss": "^8.4.21",
     "pug": "^3.0.2",
     "regenerator-runtime": "^0.13.7"

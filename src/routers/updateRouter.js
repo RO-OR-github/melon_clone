@@ -15,6 +15,7 @@ updateRouter.post(
       await data.save();
       console.log(data.songview);
       isLoding = false;
+      res.json({ songview: data.songview });
     }
   },
   home

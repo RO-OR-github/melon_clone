@@ -5,15 +5,38 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="stylesheet" href="/css/styles.css" />
   </head>
   <body>
-    <h1>인기 차트</h1>
-    <% (data || []).forEach((song) => { %>
-    <div onclick="updateData('<%= song._id %>')"><%= song.title %></div>
+    <h1 style="font-size: 2rem; margin: 2vw auto">인기 차트</h1>
+    <% (data || []).forEach((song, index) => { %>
+    <div
+      class="chart"
+      onclick="updateData('<%= song._id %>','<%= song.videoId %>')"
+    >
+      <%= index + 1 %>.<%= song.title %>
+    </div>
+
     <% }) %>
+    <div>
+      <!-- 아래 dialog 태그 영역이 메시지 창 -->
+      <dialog id="myMsgDialog">
+        <iframe
+          id="ytplayer"
+          type="text/html"
+          width="640"
+          height="360"
+          src=""
+          frameborder="0"
+        ></iframe>
+      </dialog>
+    </div>
+
     <script>
+      let dialog = document.getElementById("myMsgDialog");
+      let yplayer = document.getElementById("ytplayer");
       let isProcessing = false;
-      const updateData = (ids) => {
+      const updateData = (ids, song) => {
         if (!isProcessing) {
           isProcessing = true;
 
@@ -27,16 +50,32 @@
             body: JSON.stringify(data),
           })
             .then((response) => {
-              console.log("Data updated successfully!");
+              console.log("update success");
             })
             .catch((error) => {
-              console.error("Error updating data:", error);
+              console.error("Error update:", error);
             });
 
+          yplayer.src = `https://www.youtube.com/embed/${song}?autoplay=1&origin=http://example.com`;
+          dialog.style.display = "flex"; // 모달 요소에 style 속성으로 flex 스타일 추가
+          dialog.showModal();
           isProcessing = false;
           console.log(isProcessing);
         }
       };
+
+      dialog.addEventListener("click", (event) => {
+        if (event.target.nodeName === "DIALOG") {
+          closeMsg();
+        }
+      });
+      function closeMsg() {
+        let dialog = document.getElementById("myMsgDialog");
+        yplayer.src = "";
+        dialog.style.flex = "none";
+        dialog.close();
+        window.location.reload();
+      }
     </script>
   </body>
 </html>
