@@ -1,8 +1,18 @@
 import mongoose from "mongoose";
+import Song from "./Song";
 
 const userSchema = new mongoose.Schema({
-  username: { type: String, unique: true, required: true },
-  password: { type: String, required: true },
+  userId: { type: String, unique: true, required: true },
+  userPw: { type: String, required: true },
+  playlist: [
+    {
+      videoId: String,
+      title: String,
+      description: String,
+      thumbnail: String,
+      songview: Number,
+    },
+  ],
 });
 
 const User = mongoose.model("User", userSchema);
