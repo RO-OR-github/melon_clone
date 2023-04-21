@@ -33,7 +33,10 @@ app.use(flash());
 app.use(localsMiddleware);
 app.use("/uploads", express.static("uploads"));
 app.use("/static", express.static("assets"));
-app.use("/", rootRouter);
+app.use(
+  "https://port-0-melon-clone-e9btb72blgort9sn.sel3.cloudtype.app/",
+  rootRouter
+);
 /*
 Add more routers here!
 */
