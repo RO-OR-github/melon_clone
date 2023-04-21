@@ -11,7 +11,11 @@ import loginRouter from "./routers/loginRouter";
 import myplayRouter from "./routers/myplayRouter";
 import User from "./models/User";
 import Song from "./models/Song";
-
+// const serverUrl = process.env.DB_URL;
+// const dbName = process.env.DB_NAME;
+// const mongoStore = MongoStore.create({
+//   mongoUrl: `${serverUrl}/${dbName}`,
+// });
 const app = express();
 const logger = morgan("dev");
 
@@ -33,10 +37,7 @@ app.use(flash());
 app.use(localsMiddleware);
 app.use("/uploads", express.static("uploads"));
 app.use("/static", express.static("assets"));
-app.use(
-  "https://port-0-melon-clone-e9btb72blgort9sn.sel3.cloudtype.app/",
-  rootRouter
-);
+app.use("/", rootRouter);
 /*
 Add more routers here!
 */
